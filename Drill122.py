@@ -1,6 +1,10 @@
 
 import tkinter
 from tkinter import * 
+from tkinter import filedialog
+
+
+
 
 class ParentWindow(Frame):
     def __init__ (self, master):
@@ -15,7 +19,7 @@ class ParentWindow(Frame):
         self.varFName = StringVar()
         self.varLName = StringVar()
 
-        self.browse1 = Button(self.master,text='Browse...', fg='black', padx=30)
+        self.browse1 = Button(self.master,text='Browse...', fg='black', padx=30, command=self.directory)
         self.browse1.grid(row=0, column=0,padx=(30,0), pady=(30,0))
 
         self.browse2 = Button(self.master,text='Browse...', fg='black', padx=30)
@@ -34,6 +38,11 @@ class ParentWindow(Frame):
         self.btnCheck.grid(row=2, column=0,padx=(30,0), pady=(10,0))
 
 
+    def directory(self):
+        selectfolder = filedialog.askdirectory()
+        print(selectfolder)
+        self.txtBrowse1.insert(0,selectfolder)
+                              
 if __name__ == "__main__":
     root = Tk()
     App = ParentWindow(root)
