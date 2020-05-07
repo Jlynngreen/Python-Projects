@@ -47,17 +47,16 @@ class ParentWindow(Frame):
         self.txtBrowse1.insert(0,selectfolder)
 
     def destinationDirectory(self):
-        ## variable that uses askdirectory() method that pulls uo fileExplorer so you can select within the directory/folder
+        ## variable that uses askdirectory() method that pops up fileExplorer so user can select directory/folder
         selectDestinationfolder = filedialog.askdirectory()
-        ## using the insert method to take user folder selected to insert into the text box
+        ## using insert method to take user folder selection to insert into second text box
         self.txtBrowse2.insert(0,selectDestinationfolder)
-
-    ## moveTxtfiles function takes selected directory and filters through text files and moves to another directory
+        
+    ## moveTxtfiles function takes selected directory and filters through txt files to move to another directory
     def moveTxtfiles(self):
         source_directory = self.txtBrowse1.get()
         print(type(source_directory))
         destination_directory = self.txtBrowse2.get()
-        ## listdir method is creating a list of files that the user has created in the directory
         files = os.listdir(source_directory)
 ##        print(files)
         print(type(files))
@@ -72,19 +71,15 @@ class ParentWindow(Frame):
             for item in files:
 ##            print(item)
 ##            print(type(item)
-                ## os.path.join method is joining folder and the item that the user has selected
                 abpath = os.path.join(source_directory, item)
 ##            print(path)
 ##            print(type(path))
-                ## selecting only docs ending with (txt)
                 if item.endswith(".txt"):
                     print(item)
                     cur.execute("INSERT INTO tbl_fileList(col_filename) VALUES (?)", (item,))
-                    ## getmtime method is getting the timestamp of those files that the user has created 
                     modification_time = os.path.getmtime(abpath)
                     local_time = time.ctime(modification_time) 
-                    print("Last modification time(Local time):", local_time)
-                    ## shuntil.move() is moving theses (item(txt)) that the user has selected into the folder that was created
+                    print("Last modification time(Local time):", local_time) 
                     dest = shutil.move(abpath, destination_directory)
                     print(dest)
          
